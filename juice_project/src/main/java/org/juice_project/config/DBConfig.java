@@ -23,7 +23,6 @@ public class DBConfig {
         hikariConfig.setJdbcUrl("jdbc:log4jdbc:oracle:thin:@1.220.247.78:1522:orcl");
         hikariConfig.setUsername("final2404_project3");
         hikariConfig.setPassword("234563");
-
         hikariConfig.setPoolName("juice-project");
         hikariConfig.setMaximumPoolSize(5);
 
@@ -32,12 +31,12 @@ public class DBConfig {
         return dataSource;
     }
 
-    @Bean
-    public SqlSessionFactory sqlSessionFactory() throws Exception {
-        SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
-        sqlSessionFactory.setDataSource(dataSource());
-        sqlSessionFactory.setMapperLocations(
-        		new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/**/*.xml"));
-        return (SqlSessionFactory) sqlSessionFactory.getObject();
-    }
+//    @Bean
+//    public SqlSessionFactory sqlSessionFactory() throws Exception {
+//        SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
+//        sqlSessionFactory.setDataSource(dataSource());
+//        sqlSessionFactory.setMapperLocations(
+//        		new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/**/*.xml"));
+//        return (SqlSessionFactory) sqlSessionFactory.getObject();
+//    }
 }
