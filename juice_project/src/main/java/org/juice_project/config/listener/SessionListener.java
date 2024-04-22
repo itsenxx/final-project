@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SessionListener implements HttpSessionListener {
-    private int sessionTime = 10;
+    private int sessionTime = 86400;
 
     public void sessionCreated(HttpSessionEvent se) {
         se.getSession().setMaxInactiveInterval(sessionTime);

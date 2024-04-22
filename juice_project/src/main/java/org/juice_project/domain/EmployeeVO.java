@@ -18,4 +18,5 @@ public class EmployeeVO {
     private String position;
     private int depId;
     private String role;
+    private String depName;
 }

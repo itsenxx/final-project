@@ -32,8 +32,9 @@ public class SecurityConfig {
                 formLogin
                     .loginPage("/home/login")
                     .usernameParameter("employeeId")
-                    .defaultSuccessUrl("/home/home")
+                    .defaultSuccessUrl("/board/list")
                     .failureUrl("/home/login-failure")
+                    .successHandler(new CustomAuthenticationSuccessHandler())
                     .permitAll()
             )
             .logout(logout ->
