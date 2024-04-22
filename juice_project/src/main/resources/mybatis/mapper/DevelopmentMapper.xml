@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.juice_project.mapper.DevelopmentMapper">
+    <resultMap id="productResultMap" type="org.juice_project.domain.ProductVO">
+        <result column="prod_id" property="prodId" />
+        <result column="prod_name" property="prodName" />
+        <result column="lot_size" property="lotSize" />
+        <result column="unit" property="unit" />
+        <result column="condition" property="condition" />
+        <result column="inventory" property="inventory" />
+    </resultMap>
+    <resultMap id="bomResultMap" type="org.juice_project.domain.BomVO">
+        <result column="mater_id" property="materId" />
+        <result column="prod_id" property="prodId" />
+        <result column="mater_name" property="materName" />
+        <result column="unit" property="unit" />
+        <result column="content" property="content" />
+        <result column="turn" property="turn" />
+        <result column="prod_name" property="prodName" />
+    </resultMap>
+    <select id="selectAllBom" resultMap="bomResultMap">
+        select
+            b.prod_id,
+            p.prod_name,
+            b.turn,
+            b.mater_id,
+            m.mater_name,
+            b.content
+        from
+            bom_test b
+        left join
+            product p on b.prod_id = p.prod_id
+        left join
+            material m on b.mater_id = m.mater_id
+        order by
+            b.prod_id asc,
+            b.turn asc
+    </select>
+    <select id="findProdId" resultType="int">
+        select
+            prod_id
+        from
+            product
+        where
+            prod_name = #{prodName}
+    </select>
+    <insert id="insertProdInventory">
+        insert into prod_inventory(
+            trans_date,
+            prod_id,
+            input,
+            output,
+            inventory)
+        values (
+            sysdate,
+            #{prodId},
+            0,
+            0,
+            0)
+    </insert>
+    <select id="selectMonthlySalesData" resultType="org.juice_project.domain.MonthlySalesVO">
+        SELECT
+            EXTRACT(MONTH FROM sale_date) AS month,
+            SUM(prod_quan) AS totalQuantity
+        FROM
+            orders
+        WHERE
+            sale_date IS NOT NULL
+        GROUP BY
+            EXTRACT(MONTH FROM sale_date)
+        ORDER BY month asc
+    </select>
+    <select id="selectSalesDataByProduct" parameterType="int" resultType="org.juice_project.domain.ProductSalesVO">
+        SELECT
+            p.prod_name,
+            SUM(o.prod_quan) AS totalQuantity
+        FROM
+            orders o
+        JOIN
+            product p ON o.prod_id = p.prod_id
+        WHERE
+            EXTRACT(MONTH FROM o.sale_date) = #{month}
+        GROUP BY
+            p.prod_name
+        ORDER BY
+            p.prod_name asc
+    </select>
+    <select id="selectSalesDataByCustomer" parameterType="int" resultType="org.juice_project.domain.CustomerSalesVO">
+        SELECT
+            c.cust_name,
+            SUM(o.prod_quan) AS totalQuantity
+        FROM
+            orders o
+        JOIN
+            customers c ON o.cust_id = c.cust_id
+        WHERE
+            EXTRACT(MONTH FROM o.sale_date) = #{month}
+        GROUP BY
+            c.cust_name
+        ORDER BY
+            SUM(o.prod_quan) DESC
+        FETCH FIRST 10 ROWS ONLY
+    </select>
+    <insert id="insertProduct">
+        insert into product(
+            prod_id,
+            prod_name,
+            lot_size,
+            unit,
+            condition)
+        values(
+            prod_seq.nextval,
+            #{prodName},
+            #{lotSize},
+            #{unit},
+            1)
+    </insert>
+    <select id="selectAllProduct" resultMap="productResultMap">
+        select
+            p.prod_id,
+            p.prod_name,
+            p.unit,
+            p.lot_size,
+            p.condition,
+            pi.inventory
+        from
+            product p
+        left join
+            prod_inventory pi on p.prod_id = pi.prod_id
+        order by
+            p.prod_id asc
+    </select>
+    <update id="updateProductCondition">
+        update
+            product
+        set
+            condition = #{condition}
+        where
+            prod_id = #{prodId}
+    </update>
+    <select id="selectMaterial" resultMap="bomResultMap">
+        select
+            m.mater_id,
+            m.mater_name,
+            m.unit,
+            coalesce(b.content, 0) as content
+        from
+            material m
+        left join (
+            select
+                *
+            from
+                bom_test
+            where
+                prod_id = #{prodId}) b
+            on
+                m.mater_id = b.mater_id
+    </select>
+    <delete id="deleteBom">
+        delete
+        from
+            bom_test
+        where
+            prod_id = #{prodId}
+    </delete>
+    <insert id="insertBom">
+        insert into bom_test(
+            prod_id,
+            mater_id,
+            content,
+            turn)
+        values (
+            #{prodId},
+            #{materId},
+            #{content},
+            #{turn})
+    </insert>
+</mapper>

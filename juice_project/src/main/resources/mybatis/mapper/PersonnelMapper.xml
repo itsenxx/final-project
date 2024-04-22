@@ -4,10 +4,70 @@
 <mapper namespace="org.juice_project.mapper.PersonnelMapper">
     <select id="selectEmployee" resultType="org.juice_project.domain.EmployeeVO">
         select
-            *
+            e.emp_id,
+            e.emp_name,
+            e.password,
+            e.phone,
+            e.address,
+            e.email,
+            e.position,
+            e.dep_id,
+            d.dep_name as depName
         from
-            employee_test
+            employee_test e
+        left join
+            departments d on e.dep_id = d.dep_id
         order by
-            emp_id
+            e.emp_id
     </select>
+    <insert id="insertEmployee">
+        insert into
+            employee_test
+        values (
+            seq_employee_test.nextval,
+            #{empName},
+            '$2a$10$zZMz4/ONUQ9wH.nAE6sNxu32NxbIfiHBO72d2LOrP4bJ63yolVOo6',
+            #{phone},
+            #{address},
+            #{email},
+            #{position},
+            #{depId}
+        )
+    </insert>
+
+    <delete id="deleteEmployee">
+        delete from employee_test where emp_id = #{empId}
+    </delete>
+
+
+    <update id="updateEmployee" parameterType="org.juice_project.domain.EmployeeVO">
+        UPDATE employee_test
+        SET emp_name = #{empName},
+        phone = #{phone},
+        address = #{address},
+        email = #{email},
+        dep_id = #{depId},
+        position = #{position}
+        WHERE emp_id = #{empId}
+    </update>
+
+    <update id="changePassword">
+        update
+        employee_test
+        set
+        password = '${newPassword}'
+        where
+        emp_id = ${empId}
+    </update>
+
+    <update id="resetPassword">
+        update
+        employee_test
+        set
+        password = '${$2a$10$zZMz4/ONUQ9wH.nAE6sNxu32NxbIfiHBO72d2LOrP4bJ63yolVOo6}'
+        where
+        emp_id = ${empId}
+    </update>
+
+
 </mapper>

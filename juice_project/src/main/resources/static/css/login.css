@@ -1,0 +1,198 @@
+/*!
+ * Bootstrap v3.3.2 (http://getbootstrap.com)
+ * Copyright 2011-2015 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+
+.btn-warning{
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+
+.btn {
+    display: inline-block;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: white;
+}
+
+
+.btn-warning.active {
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+.btn-warning .badge {
+  text-shadow: none;
+}
+.btn:active,
+.btn.active {
+  background-image: none;
+}
+.btn-default {
+  text-shadow: 0 1px 0 #fff;
+  background-image: -webkit-linear-gradient(top, #fff 0%, #e0e0e0 100%);
+  background-image:      -o-linear-gradient(top, #fff 0%, #e0e0e0 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e0e0e0));
+  background-image:         linear-gradient(to bottom, #fff 0%, #e0e0e0 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  background-repeat: repeat-x;
+  border-color: #dbdbdb;
+  border-color: #ccc;
+}
+
+.btn-warning {
+  background-image: -webkit-linear-gradient(top, #f0ad4e 0%, #eb9316 100%);
+  background-image:      -o-linear-gradient(top, #f0ad4e 0%, #eb9316 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f0ad4e), to(#eb9316));
+  background-image:         linear-gradient(to bottom, #f0ad4e 0%, #eb9316 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff0ad4e', endColorstr='#ffeb9316', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  background-repeat: repeat-x;
+  border-color: #e38d13;
+}
+.btn-warning:hover,
+.btn-warning:focus {
+  background-color: #eb9316;
+  background-position: 0 -15px;
+}
+.btn-warning:active,
+.btn-warning.active {
+  background-color: #eb9316;
+  border-color: #e38d13;
+}
+.btn-warning.disabled,
+.btn-warning:disabled,
+.btn-warning[disabled] {
+  background-color: #eb9316;
+  background-image: none;
+}
+
+#sub_content {
+  width: 100%;
+  min-width: 1200px;
+  float: left;
+}
+.cont01 {
+width: 1200px;
+    max-width: 1280px;
+    height: 100%;
+    margin: 0 auto;
+    display: grid;
+    place-items: center;
+}
+.login-title{
+  margin: 30px 0;
+  border-bottom: 1px solid #e2e2e2;
+}
+.login-cont1-txt > .form-control {
+  height: 45px;
+}
+
+.form-control {
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)
+}
+
+.login-cont1 {
+  margin: 15px 0 60px 0;
+  width: 39%;
+  position: relative;
+  float: left;
+}
+.login-cont1-form {
+  margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: center; */
+}
+.login-cont1-txt {
+  width:75%;
+}
+.login-cont1-btn {
+  width:20%;
+}
+.login-cont1-btn > input {
+  margin: 0 10px;
+  padding: 47px 25px;
+  font-size: 20px;
+  background: #438729;
+  border-color: #438729;
+}
+.login-cont1-btn > input:hover {
+  background: #30611e;
+  border-color: #30611e;
+}
+.login-cont1-btn > input:focus {
+  background: #30611e;
+  border-color: #30611e;
+}
+
+.login-cont2 {
+  width:40%;
+  float: left;
+  position: relative;
+  left: 150px;
+}
+.cont2-1 {
+  width: 47%;
+  float: left;
+  text-align: center;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+.cont2-1 > div:first-child {
+  padding: 10px 10px 0;
+  font-size: 2rem;
+}
+.cont2-1 > div:nth-child(2) {
+  padding: 10px;
+}
+.cont2-1:hover {
+  background: #525252;
+}
+.cont2-1:hover > div:first-child > i {
+  color: #fff;
+}
+.cont2-1:hover > div:nth-child(2){
+  color: #fff;
+}
+
+.sub100-tb > tbody > tr > th {
+  padding: 15px;
+  text-align: center;
+}
+.sub100-tb-online {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+

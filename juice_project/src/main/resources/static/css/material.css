@@ -1,0 +1,94 @@
+#box {
+  margin-top: 20px; /* 위쪽 여백 조정 */
+  margin-bottom: 20px; /* 아래쪽 여백 조정 */
+}
+
+#registration,
+#purchase{
+  margin-top: 10px; /* 테이블 간의 위쪽 간격 조정 */
+  margin-bottom: 10px; /* 테이블 간의 아래쪽 간격 조정 */
+}
+
+table {
+  border-collapse: collapse;
+  border: 0;
+  width: 100%; /* 테이블 가로폭을 화면 너비에 맞게 설정 */
+}
+
+th,td {
+  border: 1px solid #aaa;
+  padding: 10px; /* 셀 안의 내용과 테두리 사이의 여백 설정 */
+  text-align: left;
+}
+
+th {
+  background-color: #f8f8f8;
+}
+
+#registration th,
+#purchase th,
+#manager th {
+  position: sticky;
+  top: 0;
+  background-color: #f8f8f8;
+  z-index: 2;
+}
+
+#registration td,
+#purchase td,
+#manager td {
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 40em) {
+  #box {
+    width: 80%; /* 화면 너비의 80%로 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+  }
+
+  table {
+    min-width: 600px; /* 테이블 최소 너비 설정 */
+  }
+  table
+}
+
+
+
+.materId{
+  width:73px;
+}
+.materName{
+width:47.8px;
+}
+.inventory{
+width:53px;
+}
+.buttonClass{
+width:53.5px;
+}
+
+.materId1{
+  width:72.2px;
+}
+.materName1{
+width:46.5px;
+}
+.inventory1{
+width:55px;
+}
+.buttonClass1{
+width:52px;
+}
+
+#manager_tbody {
+    width: 100%;
+    overflow-y: auto;  /* 가로 스크롤 허용 */
+    max-height: 500px;
+    width: 861px;
+}
+  h1{
+  text-align:center;
+  margin-bottom:20px;
+  }
+

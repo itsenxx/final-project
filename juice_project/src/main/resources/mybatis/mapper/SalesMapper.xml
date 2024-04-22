@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.juice_project.mapper.SalesMapper">
+    <resultMap id="vo" type="org.juice_project.domain.CustomerVO">
+        <result column="cust_id" property="custId" />
+        <result column="cust_name" property="custName" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
+        <result column="phone_num" property="phoneNum" />
+        <result column="emp_id" property="empId" />
+    </resultMap>
+
+    <select id="getCustomerList" resultType="org.juice_project.domain.CustomerVO">
+        select
+            cust_id, cust_name, to_char(create_date,'YYYY-MM-DD HH:mm') as create_date, to_char(update_date, 'YYYY-MM-DD HH:mm') as update_date, phone_num, roadaddr, detailaddr, emp_id
+        from
+            customers
+        order by cust_id desc
+    </select>
+
+    <insert id="insertCustomer">
+        insert into
+            customers (cust_id, cust_name, password, phone_num, roadaddr, detailaddr)
+        values (#{custId}, #{custName}, '1234', #{phoneNum}, #{roadAddr}, #{detailAddr})
+    </insert>
+
+
+    <select id="getCustId" resultType="org.juice_project.domain.CustomerVO">
+        select * from customers where cust_id = #{custId}
+    </select>
+
+
+    <select id="getOrderList" resultType="org.juice_project.domain.OrdersVO">
+        select
+            o.order_id,
+            o.cust_id,
+            c.cust_name,
+            o.prod_id,
+            p.prod_name,
+            to_char(o.prod_quan, 'FM9,999,999') AS prodQuan,
+            to_char(o.order_date, 'YYYY-MM-DD HH:mm') as orderDate,
+            o.emp_id,
+            to_char(o.sale_date, 'YYYY-MM-DD HH:mm') as saleDate,
+            o.order_status
+        from
+            orders o
+        left join
+            customers c on o.cust_id = c.cust_id
+        left join
+            product p on o.prod_id = p.prod_id
+        ORDER BY
+            order_id DESC
+    </select>
+
+
+    <resultMap id="orderVO" type="org.juice_project.domain.OrdersVO">
+        <result column="cust_id" property="custId" />
+        <result column="cust_id" property="custId" />
+        <result column="prod_id" property="prodId" />
+        <result column="prod_quan" property="prodQuan" />
+        <result column="order_date" property="orderDate" />
+        <result column="sale_date" property="saleDate" />
+        <result column="emp_id" property="empId" />
+    </resultMap>
+
+    <select id="getOrderId" resultMap="orderVO">
+        select
+            p.prod_name, o.prod_quan, o.order_status,
+            to_char(o.sale_date, 'YYYY-MM-DD HH:mm') as sale_date
+        from
+            orders o
+        left join
+            product p on o.prod_id = p.prod_id
+        where
+            order_id = #{orderId}
+    </select>
+
+    <update id="updateOrder">
+        update
+            orders
+        set
+            emp_id = #{empId},
+            sale_date = sysdate,
+            order_status = 2
+        where
+            order_id = ${orderId}
+    </update>
+</mapper>

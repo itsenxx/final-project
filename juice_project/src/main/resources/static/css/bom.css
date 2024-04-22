@@ -1,0 +1,133 @@
+#box {
+  margin-top: -40px; /* 위쪽 여백 조정 */
+  margin-bottom: 20px; /* 아래쪽 여백 조정 */
+     overflow: hidden; /* 자식 요소를 감추지 않고 포함하도록 함 */
+}
+
+
+
+
+table {
+  border-collapse: collapse;
+  border: 1px  solid #aaa;
+  width: 100%; /* 테이블 가로폭을 화면 너비에 맞게 설정 */
+}
+
+th,td {
+  border: 1px solid #aaa;
+  border-collapse: collapse;
+  padding: 10px; /* 셀 안의 내용과 테두리 사이의 여백 설정 */
+  text-align: left;
+  font-size: 16px; /* 원하는 글꼴 크기 값으로 조정 */
+}
+
+th {
+  background-color: #f8f8f8;
+}
+
+#updateBom,
+#selectBom {
+    margin-top: 20px; /* 원하는 간격 조절 */
+}
+
+/* 각 열의 너비를 일치시킴 */
+
+#selectMaterial_tbody td {
+    width: 20%; /* 총 5개의 열이므로 각 열의 너비를 20%로 설정 */
+}
+#selectMaterial_thead th,
+#selectBom_thead th{
+background-color:gray;
+color:white;
+}
+
+
+#selectMaterial_thead table,
+#selectMaterial_tbody table{
+width:500px;
+}
+#selectMaterial_tbody table{
+height:500px;
+overflow-y: auto;
+}
+
+
+
+#selectBom_thead th,
+#selectBom_tbody td {
+    width: 20%; /* 총 5개의 열이므로 각 열의 너비를 20%로 설정 */
+}
+
+#selectBom_thead table,
+#selectBom_tbody table{
+width:500px;
+}
+
+#selectBom_tbody table{
+height:500px;
+overflow-y: auto;
+}
+
+#selectMaterial {
+    float: left; /* 왼쪽으로 요소 배치 */
+}
+
+#selectBom {
+    float: right; /* 오른쪽으로 요소 배치 */
+
+}
+
+#selectMaterial, #selectBom {
+    height: 100%; /* 두 요소의 높이를 동일하게 맞춤 */
+}
+#selectBom {
+height: 100px
+}
+
+#selectProductDiv {
+    margin-bottom: 20px; /* 아래쪽으로 20px 간격 띄우기 */
+}
+
+#selectMaterial {
+    margin-top: 20px; /* 위쪽으로 20px 간격 띄우기 */
+}
+
+#selectMaterial_tbody {
+    max-height: 450px; /* 최대 높이 지정 */
+    overflow-y: auto; /* 세로 스크롤만 활성화 */
+}
+
+#selectBom_tbody {
+    max-height: 450px; /* 최대 높이 지정 */
+    overflow-y: auto; /* 세로 스크롤만 활성화 */
+}
+
+h1{
+margin-top:50px;
+text-align : center;
+}
+
+#selectProduct{
+    width: 200px;
+    height: 50px;
+    padding: 10px 25px;
+    border: 2px solid #000;
+  }
+  #updateBomBtn{
+      width: 100px;
+      height: 50px;
+      padding: 10px 25px;
+      border: 2px solid #000;
+  }
+  #check{
+  width: 37px;
+  }
+  #num{
+  width: 30px;
+  }
+  #name{
+  width: 12px;
+  }
+  #content{
+  width: 78px;
+  }

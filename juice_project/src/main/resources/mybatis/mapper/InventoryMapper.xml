@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.juice_project.mapper.InventoryMapper">
+  <select id="selectMaterInventory" resultType="org.juice_project.domain.MaterInventoryVO">
+    SELECT
+      TRANS_MONTH,
+      MATER_ID,
+      MATER_NAME,
+      PREV_INVENTORY,
+      INPUT,
+      OUTPUT,
+      (PREV_INVENTORY + INPUT - OUTPUT) AS INVENTORY
+    FROM (
+      SELECT
+        TO_CHAR(MI.TRANS_DATE, 'YYYY-MM') AS TRANS_MONTH,
+        MI.MATER_ID,
+        (SELECT MA.MATER_NAME FROM MATERIAL MA WHERE MI.MATER_ID = MA.MATER_ID) AS MATER_NAME,
+        NVL(LAG(MI.INVENTORY, 1, 0) OVER (PARTITION BY MI.MATER_ID ORDER BY MI.TRANS_DATE), 0) AS PREV_INVENTORY,
+        NVL(MI.INPUT, 0) AS INPUT,
+        NVL(MI.OUTPUT, 0) AS OUTPUT
+      FROM
+        MATER_INVENTORY MI)
+    ORDER BY
+      MATER_ID ASC, TRANS_MONTH ASC
+  </select>
+
+  <select id="selectProdInventory" resultType="org.juice_project.domain.ProdInventoryVO">
+    SELECT
+      TRANS_MONTH,
+      PROD_ID,
+      PROD_NAME,
+      PREV_INVENTORY,
+      INPUT,
+      OUTPUT,
+      (PREV_INVENTORY + INPUT - OUTPUT) AS INVENTORY
+    FROM (
+      SELECT
+      TO_CHAR(PI.TRANS_DATE, 'YYYY-MM') AS TRANS_MONTH,
+      PI.PROD_ID,
+      (SELECT PR.PROD_NAME FROM PRODUCT PR WHERE PI.PROD_ID = PR.PROD_ID) AS PROD_NAME,
+      NVL(LAG(PI.INVENTORY, 1, 0) OVER (PARTITION BY PI.PROD_ID ORDER BY PI.TRANS_DATE), 0) AS PREV_INVENTORY,
+      NVL(PI.INPUT, 0) AS INPUT,
+      NVL(PI.OUTPUT, 0) AS OUTPUT
+      FROM
+      PROD_INVENTORY PI)
+    ORDER BY
+      PROD_ID ASC, TRANS_MONTH ASC
+  </select>
+
+</mapper>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.juice_project.mapper.BomMapper">
+    <select id="getList" resultType="org.juice_project.domain.BomVO">
+        <!-- < 혹은 > 등의 특수문자 부등호 때문에 사용 -->
+        <![CDATA[
+			select prod_id from bom
+		]]>
+        order by prod_id desc
+    </select>
+    <select id="getList2" resultType="org.juice_project.domain.MaterialVO">
+        <!-- < 혹은 > 등의 특수문자 부등호 때문에 사용 -->
+        <![CDATA[
+			select * from material
+		]]>
+        order by mater_id desc
+    </select>
+
+    <select id="selectBomList" resultType="org.juice_project.domain.BomVO">
+        select prod_id,
+        mater_id,
+        content
+        from
+        bom
+        where
+        1 = 1
+        order by
+        prod_id desc
+    </select>
+
+    <select id="selectBomCount" resultType="int">
+        select
+        count(*)
+        from
+        bom
+    </select>
+
+    <insert id="insert">
+        insert into bom (mater_id,content)
+        values ( #{materId}, #{content})
+    </insert>
+
+    <insert id="insertSelectKey1">
+        <selectKey keyProperty="prodId" order="BEFORE" resultType="int">
+            select bom_seq.nextval from dual
+        </selectKey>
+        insert into bom (prod_id,mater_id,content)
+        values ( #{prodId}, #{materId}, #{content})
+    </insert>
+    <resultMap id="BomVO" type="org.juice_project.domain.BomVO">
+        <result column="prod_id" property="prodId" />
+        <result column="mater_id" property="materId" />
+        <result column="content" property="content" />
+    </resultMap>
+
+    <select id="read" resultType="org.juice_project.domain.BomVO">
+        select * from bom
+        where 1=1
+        <if test="prod_id != null">
+            and prod_id = #{prod_id}
+        </if>
+
+    </select>
+
+    <update id="update">
+        update bom
+        set
+        mater_id = #{materId}
+        ,content = #{content}
+        where prod_id = #{prodId}
+    </update>
+</mapper>

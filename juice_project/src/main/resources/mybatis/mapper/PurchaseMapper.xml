@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.juice_project.mapper.PurchaseMapper">
+    <resultMap id="materialResultMap" type="org.juice_project.domain.MaterialVO">
+        <result column="mater_id" property="materId" />
+        <result column="mater_name" property="materName" />
+        <result column="unit" property="unit" />
+        <result column="condition" property="condition" />
+        <result column="inventory" property="inventory" />
+        <result column="input" property="input" />
+    </resultMap>
+    <resultMap id="suppliersResultMap" type="org.juice_project.domain.SuppliersVO">
+        <result column="supp_id" property="suppId" />
+        <result column="supp_name" property="suppName" />
+        <result column="create_date" property="createDate" />
+        <result column="phone_num" property="phoneNum" />
+        <result column="address" property="address" />
+        <result column="email" property="email" />
+    </resultMap>
+    <update id="updateMaterialCondition">
+        update
+            material
+        set
+            condition = #{condition}
+        where
+            mater_id = #{materId}
+    </update>
+    <select id="selectMaterial" resultMap="materialResultMap">
+        select
+            mater_id,
+            mater_name,
+            condition
+        from
+            material
+        where
+            condition = 1
+        order by
+            mater_id asc
+    </select>
+    <select id="selectAllMaterial" resultMap="materialResultMap">
+        select
+            m.mater_id,
+            m.mater_name,
+            m.unit,
+            m.condition,
+            mi.inventory
+        from
+            material m
+        left join
+            mater_inventory mi on m.mater_id = mi.mater_id
+        order by
+            m.mater_id asc
+    </select>
+    <select id="selectSuppliers" resultType="org.juice_project.domain.SuppliersVO">
+        SELECT
+            s.*
+        FROM
+            suppliers s
+        JOIN
+            supp_mater sm ON s.supp_id = sm.supp_id
+        WHERE
+            sm.mater_id = #{materId}
+        ORDER BY
+            s.supp_id ASC
+    </select>
+    <insert id="insertMaterial">
+        insert into material(
+            mater_id,
+            mater_name,
+            unit,
+            condition)
+        values(
+            mat_seq.nextval,
+            #{materName},
+            #{unit},
+            1)
+    </insert>
+    <insert id="insertBuy">
+        insert into buy(
+            buy_id,
+            mater_id,
+            supp_id,
+            quantity,
+            emp_id,
+            order_date)
+        values(
+            buy_seq.nextval,
+            #{materId},
+            #{suppId},
+            #{quantity},
+            #{empId},
+            sysdate)
+    </insert>
+    <select id="selectSuppliers2" resultMap="suppliersResultMap">
+        select
+            supp_id,
+            supp_name
+        from
+            suppliers
+        order by
+            supp_id asc
+    </select>
+    <select id="selectMaterial2" resultType="org.juice_project.domain.MaterialVO">
+        select
+            m.*
+        from
+            material m
+        where
+            m.mater_id not in (
+                select
+                    sm.mater_id
+                from
+                    supp_mater sm
+                where
+                    sm.supp_id = #{suppId}
+                )
+        order by
+            m.mater_id asc
+    </select>
+    <insert id="insertSuppliers">
+        insert into suppliers(
+            supp_id,
+            supp_name,
+            create_date,
+            phone_num,
+            address,
+            email)
+        values(
+            sup_seq.nextval,
+            #{suppName},
+            sysdate,
+            #{phoneNum},
+            #{address},
+            #{email})
+    </insert>
+    <insert id="insertSuppMater">
+        insert into supp_mater(
+            mater_id,
+            supp_id)
+        values(
+            #{materId},
+            #{suppId})
+    </insert>
+    <select id="selectAllSuppliers" resultMap="suppliersResultMap">
+        select
+            supp_id,
+            supp_name,
+            phone_num,
+            address,
+            email,
+            to_char(create_date, 'YYYY-MM-DD') as create_date
+        from
+            suppliers
+        order by
+            supp_id asc
+    </select>
+    <select id="selectMaterial3" resultType="org.juice_project.domain.MaterialVO">
+        select
+            m.*
+        from
+            material m
+        join
+            supp_mater sm on m.mater_id = sm.mater_id
+        where
+            sm.supp_id = #{suppId}
+        order by
+            m.mater_id asc
+    </select>
+    <delete id="deleteSuppMater">
+        delete
+        from
+            supp_mater
+        where
+            supp_id = #{suppId}
+        and
+            mater_id = #{materId}
+    </delete>
+    <select id="findMaterId" resultType="int">
+        select
+            mater_id
+        from
+            material
+        where
+            mater_name = #{materName}
+    </select>
+    <insert id="insertMaterInventory">
+        insert into mater_inventory(
+            trans_date,
+            mater_id,
+            input,
+            output,
+            inventory)
+        values (
+            sysdate,
+            #{materId},
+            0,
+            0,
+            0)
+    </insert>
+    <select id="findInventory" resultType="int">
+        select
+            inventory
+        from
+            mater_inventory
+        where
+            mater_id = #{materId}
+    </select>
+    <select id="findInput" resultType="int">
+        select
+            input
+        from
+            mater_inventory
+        where
+            mater_id = #{materId}
+    </select>
+    <update id="updateMaterInventory">
+        update
+            mater_inventory
+        set
+            input = #{input},
+            inventory = #{inventory}
+        where
+            mater_id = #{materId}
+    </update>
+</mapper>

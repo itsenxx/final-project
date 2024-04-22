@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.juice_project.mapper.BuyMapper">
+    <select id="getList" resultType="org.juice_project.domain.BuyVO">
+        select * from buy order by mater_id asc
+    </select>
+
+    <insert id="insert">
+        insert into buy (mater_id, mater_name, buying, quantity, unit, amount, order_date, emp_name)
+        values (#{mater_id}, #{mater_name}, #{buying}, #{quantity}, #{unit}, #{amount}, #{order_date}, #{emp_name})
+    </insert>
+
+    <insert id="insertSelectKey1" useGeneratedKeys="true" keyProperty="mater_id">
+        <selectKey keyProperty="mater_id" order="BEFORE" resultType="long">
+            select buy_seq.nextval from dual
+        </selectKey>
+        insert into buy (mater_id, mater_name, buying, quantity, unit, amount, order_date, emp_name)
+        values (#{mater_id}, #{mater_name}, #{buying}, #{quantity}, #{unit}, #{amount}, #{order_date}, #{emp_name})
+    </insert>
+
+    <select id="read" resultType="org.juice_project.domain.BuyVO">
+        select * from buy
+        where 1=1
+        <if test="mater_id != null">
+            and MATER_ID = #{mater_id}
+        </if>
+    </select>
+
+    <delete id="delete">
+        delete from buy where mater_id = #{mater_id}
+    </delete>
+
+    <update id="update">
+        update buy
+        set mater_name = #{mater_name}
+        ,buying = #{buying}
+        ,quantity = #{quantity}
+        ,unit = #{unit}
+        ,amount = #{amount}
+        ,order_date = #{order_date}
+        ,emp_name = #{emp_name}
+        ,update_date = sysdate
+        where MATER_ID = #{mater_id}
+    </update>
+
+    <select id="getDynamicMybatis" resultType="org.juice_project.domain.BuyVO">
+        select * from buy
+        <where>
+            <if test="map.C != null">
+                AND content = #{map.C}
+            </if>
+            <if test="map.T != null">
+                AND title = #{map.T}
+            </if>
+        </where>
+    </select>
+</mapper>

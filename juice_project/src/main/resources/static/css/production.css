@@ -1,0 +1,158 @@
+@charset "UTF-8";
+
+#outer{
+	background-color: #eee;
+	width:87%;
+	height:88%;
+	position:fixed;
+	top:55px;
+	left:225px;
+	margin:0px;
+}
+
+.headerM{
+	box-sizing:border-box;
+	text-align:center;
+	font-style: italic;
+	font-size: larger;
+	font-weight: 600;
+	margin: 2%;
+}
+
+.titles{
+	box-sizing:border-box;
+	color: white;
+	background-color: #777;
+	border-collapse:collapse;
+	width: 90%;
+	margin: 4% 2% 0% 2%;
+}
+
+.titles th{
+	border-collapse:collapse;
+	border: 0.1px solid #ccc;
+	text-align: center;
+	width:12.4%;
+}
+.content_box{
+	overflow-y: scroll;
+	height: 250px;
+	width: 1090;
+}
+
+.contentI{
+	box-sizing:border-box;
+	background-color: white;
+	border-collapse:collapse;
+	width: 90%;
+	margin: 0% 2% 0% 2%;
+}
+
+.contentI td{
+	border-collapse:collapse;
+	border: 1px solid #999;
+	text-align: center;
+	width: 12.4%;
+}
+.contentI input{
+	width: 100%;
+}
+
+.contentI .dates{
+	width: 12.4%;
+	font-size: 14px;
+}
+
+.inputField{
+	width: 12.4%;
+	font-size: 14px;
+}
+
+.contentM{
+	box-sizing:border-box;
+	background-color: white;
+	border-collapse:collapse;
+	width: 91.5%;
+	margin: 0% 0% 0% 2%;
+}
+
+.contentM td{
+	border-collapse:collapse;
+	border: 1px solid #999;
+	text-align: center;
+	width: 12.4%;
+}
+.contentM input{
+	width: 100%;
+}
+
+.s_box{
+	border: 1px solid #999;
+	width: 350px;
+}
+
+.table2, .table3{
+	display: inline-block;
+}
+
+.table2{
+  display: flex;
+  flex-direction: row;
+}
+
+.T2_content{
+  height: 100px;
+  width: 250px;
+  float: right;
+  margin: 20px;
+}
+
+.T2_brief{
+	display: flex;
+	flex-direction: column;
+}
+
+#d2{
+	padding: 20px 0px;
+}
+#d3{
+	padding: 2px 0px;
+}
+
+.T2_title li{
+	list-style-type: none;
+	font-weight: bold;
+	margin: 20px 0px 0px 0px;
+}
+
+.table3{
+	border-collapse:collapse;
+	width: 45%;
+	position: fixed;
+	right: 30px;
+	background-color: #777;
+	color: white;
+}
+
+.table3 th{
+	border-collapse:collapse;
+	border: 0.1px solid #ccc;
+	text-align: center;
+	width: 10%;
+}
+
+.T3_content{
+	box-sizing:border-box;
+	border-collapse:collapse;
+	background-color:white;
+	color: black;
+}
+
+.T3_content td{
+	border-collapse:collapse;
+	border: 0.1px solid #555;
+	text-align: center;
+	width: 9%;
+}
+
+

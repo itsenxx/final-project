@@ -1,0 +1,80 @@
+#box {
+  margin-top: 20px; /* 위쪽 여백 조정 */
+  margin-bottom: 20px; /* 아래쪽 여백 조정 */
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px  solid #aaa;
+  width: 100%; /* 테이블 가로폭을 화면 너비에 맞게 설정 */
+}
+
+th,td {
+  border: 1px solid #aaa;
+  border-collapse: collapse;
+  padding: 10px; /* 셀 안의 내용과 테두리 사이의 여백 설정 */
+  text-align: left;
+}
+
+th {
+  background-color: #f8f8f8;
+}
+.suppId{
+ width:75px;
+}
+.suppName{
+width:99px;
+}
+
+.phoneNum{
+width:151px;
+}
+.address{
+width:118px;
+}
+.email{
+width:134px;
+}
+.selectSupp{
+width:152px;
+}
+.createDate{
+width:101px;
+}
+.deleteSuppMater{
+width:103px;
+}
+
+
+.suppId1{
+ width:56px;
+}
+.suppName1{
+width:74px;
+}
+
+.phoneNum1{
+width:112px;
+}
+.address1{
+width:88px;
+}
+.email1{
+width:100px;
+}
+.selectSupp1{
+width:156px;
+}
+.createDate1{
+width:75px;
+}
+.deleteSuppMater1{
+width:112px;
+}
+
+#manager_tbody {
+    width: 100%;
+    overflow-y: auto;  /* 가로 스크롤 허용 */
+    max-height: 500px;
+    width: 1055px;
+    }

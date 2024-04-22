@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.juice_project.mapper.InstructionsMapper">
+
+  <insert id="insertInstructions">
+    INSERT INTO INSTRUCTIONS(
+      LOT_NUM,
+      PROD_ID,
+      INST_AMT,
+      PROD_AMT,
+      INST_DATE,
+      PROD_DATE,
+      EMP_ID)
+    VALUES(
+      inst_seq.nextval,
+      #{prodId},
+      #{instAmt},
+      #{prodAmt},
+      #{instDate},
+      #{prodDate, jdbcType=VARCHAR},
+      #{empId})
+  </insert>
+
+  <insert id="insertProduction">
+    INSERT INTO PRODUCTION(
+      LOT_NUM,
+      PROD_ID,
+      INST_AMT,
+      PROD_AMT,
+      INST_DATE,
+      PROD_DATE,
+      EMP_ID)
+    VALUES(
+      manu_seq.nextval,
+      #{prodId},
+      #{instAmt},
+      #{prodAmt},
+      #{instDate},
+      #{prodDate, jdbcType=VARCHAR},  <!--null 을 인정해 주는 코드-->
+      #{empId})
+  </insert>
+
+  <select id="selectInstructions" resultType="org.juice_project.domain.InstructionsVO">
+
+  SELECT
+    I.LOT_NUM,
+    (SELECT
+      P1.PROD_NAME
+     FROM
+      PRODUCT P1
+     WHERE
+      P1.PROD_ID = I.PROD_ID) AS PROD_NAME,
+    I.INST_AMT,
+    I.PROD_AMT,
+    TO_CHAR(I.INST_DATE, 'YYYY/MM/DD') AS INST_DATE,
+    TO_CHAR(I.PROD_DATE, 'YYYY/MM/DD') AS PROD_DATE,
+    (SELECT
+      E1.EMP_NAME
+    FROM
+      EMPLOYEE_TEST E1
+    WHERE
+      E1.EMP_ID = I.EMP_ID) AS EMP_NAME,
+    CASE WHEN EXISTS
+    (SELECT
+      M.LOT_NUM
+    FROM
+      PRODUCTION M
+    WHERE
+      M.LOT_NUM = I.LOT_NUM)
+      THEN
+      '미완료'
+     ELSE
+      '완료'
+    END AS COMPLETION
+  FROM
+    INSTRUCTIONS I
+  ORDER BY
+    I.LOT_NUM DESC
+
+  </select>
+
+<!--  <select id="findEmployeeById" resultType="org.juice_project.domain.EmployeeVO">-->
+<!--    SELECT-->
+<!--      *-->
+<!--    FROM-->
+<!--      EMPLOYEES-->
+<!--    WHERE-->
+<!--      EMP_ID = #{empId}-->
+<!--  </select>-->
+  <select id="findProductById" resultType="org.juice_project.domain.ProductVO">
+    SELECT
+      *
+    FROM
+      PRODUCT
+    WHERE
+      PROD_ID = #{prodId}
+  </select>
+</mapper>

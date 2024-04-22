@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.juice_project.mapper.ProductionMapper">
+  <select id="findProdId" resultType="int">
+    SELECT
+      PROD_ID
+    FROM
+      PRODUCT
+    WHERE
+      PROD_NAME = #{prodName}
+  </select>
+
+  <select id="findInput" resultType="int">
+    SELECT
+      INPUT
+    FROM
+      PROD_INVENTORY
+    WHERE
+      PROD_ID = #{prodId}
+  </select>
+
+  <select id="findInventory" resultType="int">
+    SELECT
+      INVENTORY
+    FROM
+      PROD_INVENTORY
+    WHERE
+      PROD_ID = #{prodId}
+  </select>
+
+  <select id="findLotSize" resultType="int">
+    SELECT
+      LOT_SIZE
+    FROM
+      PRODUCT
+    WHERE
+      PROD_ID =#{prodId}
+  </select>
+
+  <select id="selectProduction" resultType="org.juice_project.domain.ProductionVO">
+    SELECT
+      M.LOT_NUM,
+      (SELECT P.PROD_NAME
+       FROM PRODUCT P
+       WHERE P.PROD_ID = M.PROD_ID) AS PROD_NAME,
+      M.INST_AMT,
+      M.PROD_AMT,
+      TO_CHAR(M.INST_DATE, 'YYYY/MM/DD')INST_DATE,
+      TO_CHAR(M.PROD_DATE, 'YYYY/MM/DD')PROD_DATE,
+      EMP_ID
+    FROM
+      PRODUCTION M
+    ORDER BY
+      M.LOT_NUM ASC
+  </select>
+
+  <select id="selectManuMater" resultType="org.juice_project.domain.ManuMaterVO">
+    SELECT
+      M.LOT_NUM,
+      (SELECT P.PROD_NAME
+       FROM PRODUCT P
+       WHERE P.PROD_ID = M.PROD_ID) AS PROD_NAME,
+      M.INST_AMT,
+      B.MATER_ID,
+      MA.MATER_NAME,
+      M.INST_AMT * B.CONTENT / P.LOT_SIZE AS INPUT_QUT,
+      MI.INVENTORY
+    FROM
+      BOM_TEST B
+    LEFT JOIN
+      PRODUCT P ON B.PROD_ID = P.PROD_ID
+    LEFT JOIN
+      PRODUCTION M ON M.PROD_ID = B.PROD_ID
+    INNER JOIN
+      MATERIAL MA ON B.MATER_ID = MA.MATER_ID
+    INNER JOIN
+      MATER_INVENTORY MI ON MA.MATER_ID = MI.MATER_ID
+    WHERE
+      1=1
+    <if test = "lot_num != null">
+      and M.LOT_NUM = #{lotNum}
+    </if>
+    ORDER BY
+      MA.MATER_ID
+  </select>
+
+  <update id="updateInstructions">
+    UPDATE
+      INSTRUCTIONS
+    SET
+      PROD_AMT = #{prodAmt},
+      PROD_DATE = #{prodDate},
+      EMP_ID = #{empId}
+    WHERE
+      LOT_NUM = #{lotNum}
+  </update>
+
+  <update id="updateMaterInventory">
+    UPDATE
+      MATER_INVENTORY
+    SET
+      OUTPUT = OUTPUT + #{deduct},
+      INVENTORY = INVENTORY - #{deduct}
+    WHERE
+      MATER_ID = #{materId}
+  </update>
+
+  <select id="selectMaterInventory" resultType="org.juice_project.domain.MaterInventoryVO">
+    SELECT
+      MI.MATER_ID,
+      MI.INVENTORY,
+      MI.OUTPUT,
+      B.CONTENT
+    FROM
+      PRODUCT P
+    INNER JOIN
+      BOM_TEST B
+    ON
+      P.PROD_ID = B.PROD_ID
+    INNER JOIN
+      MATER_INVENTORY MI
+    ON
+      B.MATER_ID = MI.MATER_ID
+    WHERE
+      P.PROD_ID = #{prodId}
+    ORDER BY
+      MI.MATER_ID ASC
+  </select>
+
+  <update id="updateProdInventory">
+    UPDATE
+      PROD_INVENTORY
+    SET
+      INPUT = #{input},
+      INVENTORY = #{inventory}
+    WHERE
+      PROD_ID
+    IN
+      (SELECT
+        PROD_ID
+       FROM
+        PRODUCTION
+       WHERE
+        PROD_ID = #{prodId})
+  </update>
+
+  <delete id="deleteProduction">
+    DELETE
+      PRODUCTION
+    WHERE
+      LOT_NUM = #{lotNum}
+  </delete>
+
+  <select id="findEmployeeById" resultType="org.juice_project.domain.EmployeeVO">
+    SELECT
+      *
+    FROM
+      EMPLOYEE_TEST
+    WHERE
+      EMP_ID = #{empId}
+  </select>
+
+  <select id="findProductById" resultType="org.juice_project.domain.ProductVO">
+    SELECT
+      *
+    FROM
+      PRODUCT
+    WHERE
+      PROD_ID = #{prodId}
+  </select>
+
+
+
+
+
+
+          <select id="selectManuProd" resultType="org.juice_project.domain.ManuProdVO">
+            SELECT
+              M.LOT_NUM,
+              (SELECT P.PROD_NAME
+              FROM PRODUCT P
+              WHERE P.PROD_ID = M.PROD_ID) AS PROD_NAME,
+              M.PROD_AMT
+            FROM
+              PRODUCTION M
+            INNER JOIN
+            PRODUCT P ON P.PROD_ID = M.PROD_ID
+            WHERE
+            1=1
+            <if test = "lot_num != null">
+              and M.LOT_NUM = #{lotNum}
+            </if>
+          </select>
+</mapper>

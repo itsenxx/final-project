@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.juice_project.mapper.MaterialMapper">
+    <select id="getList" resultType="org.juice_project.domain.MaterialVO">
+        <!-- < 혹은 > 등의 특수문자 부등호 때문에 사용 -->
+        <![CDATA[
+			select * from material
+		]]>
+        order by mater_id desc
+    </select>
+</mapper>
